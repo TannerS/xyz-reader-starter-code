@@ -198,23 +198,15 @@ public class ArticleListActivity extends AppCompatActivity implements
                         + mCursor.getString(ArticleLoader.Query.AUTHOR)));
             }
 
-            Log.i("GLIDE", mCursor.getString(ArticleLoader.Query.THUMB_URL));
-
             Glide.with(ArticleListActivity.this)
                     .load(mCursor.getString(ArticleLoader.Query.THUMB_URL))
                     .apply(new RequestOptions()
                             .centerCrop()
-//                            .error(mError)
                             .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-//                            .placeholder(mPlaceHolder)
                     )
                     .transition(new DrawableTransitionOptions()
                             .crossFade())
                     .into(holder.thumbnailView);
-//            holder.thumbnailView.setImageUrl(
-//                    mCursor.getString(ArticleLoader.Query.THUMB_URL),
-//                    ImageLoaderHelper.getInstance(ArticleListActivity.this).getImageLoader());
-//            holder.thumbnailView.setAspectRatio(mCursor.getFloat(ArticleLoader.Query.ASPECT_RATIO));
         }
 
         @Override
