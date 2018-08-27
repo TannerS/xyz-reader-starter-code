@@ -20,7 +20,7 @@ android {
     buildToolsVersion '27.0.3'
 
     defaultConfig {
-        minSdkVersion 20
+        minSdkVersion 21
         targetSdkVersion 27
     }
     compileOptions {
@@ -42,4 +42,7 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
     //    implementation files('libs/volley.jar')
     implementation 'com.android.support:design:27.1.1'
+    implementation 'com.hendraanggrian:collapsingtoolbarlayout-subtitle:27.1.0'
+//    implementation "com.google.android.material:material:27.1.1"
+//    implementation "com.hendraanggrian.material:collapsingtoolbarlayout-subtitle:27.1.1"
 }

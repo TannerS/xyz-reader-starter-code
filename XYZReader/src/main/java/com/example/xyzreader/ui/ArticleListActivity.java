@@ -72,6 +72,10 @@ public class ArticleListActivity extends AppCompatActivity implements
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
+        setSupportActionBar((android.support.v7.widget.Toolbar) findViewById(R.id.toolbar));
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+
         getSupportLoaderManager().initLoader(0, null, this);
 
         mSwipeRefreshLayout.setOnRefreshListener(this);
@@ -115,7 +119,7 @@ public class ArticleListActivity extends AppCompatActivity implements
                     mSwipeRefreshLayout.setRefreshing(mIsRefreshing);
                 }
             }
-        }, 5000);
+        }, 1000);
     }
 
     @Override

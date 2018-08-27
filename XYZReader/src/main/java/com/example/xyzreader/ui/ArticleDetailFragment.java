@@ -1,7 +1,7 @@
 package com.example.xyzreader.ui;
 
 import android.support.annotation.Nullable;
-import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.SubtitleCollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.content.Intent;
@@ -21,7 +21,6 @@ import android.support.v4.app.ShareCompat;
 import android.support.v7.graphics.Palette;
 import android.text.Html;
 import android.text.format.DateUtils;
-import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,8 +28,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
-//import com.android.volley.VolleyError;
-//import com.android.volley.toolbox.ImageLoader;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -50,24 +47,20 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
 
     public static final String ARG_ITEM_ID = "item_id";
     private static final float PARALLAX_FACTOR = 1.25f;
-
     private Cursor mCursor;
     private long mItemId;
     private View mRootView;
     private int mMutedColor = 0xFF333333;
-//    private ObservableScrollView mScrollView;
-    private CollapsingToolbarLayout mCollapseToolBar;
+    private SubtitleCollapsingToolbarLayout mCollapseToolBar;
     private ScrollView mScrollView;
     private DrawInsetsFrameLayout mDrawInsetsFrameLayout;
     private ColorDrawable mStatusBarColorDrawable;
-
     private int mTopInset;
     private View mPhotoContainerView;
     private ImageView mPhotoView;
     private int mScrollY;
     private boolean mIsCard = false;
     private int mStatusBarFullOpacityBottom;
-
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss");
     // Use default locale format
     private SimpleDateFormat outputFormat = new SimpleDateFormat();
@@ -103,10 +96,6 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
         setHasOptionsMenu(true);
     }
 
-    public ArticleDetailActivity getActivityCast() {
-        return (ArticleDetailActivity) getActivity();
-    }
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -131,19 +120,9 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
             }
         });
 
-//        mScrollView = (ObservableScrollView) mRootView.findViewById(R.id.scrollview);
+        mCollapseToolBar = mRootView.findViewById(R.id.collapsingToolBar);
         mScrollView = mRootView.findViewById(R.id.scrollview);
-//        mScrollView.setCallbacks(new ObservableScrollView.Callbacks() {
-//            @Override
-//            public void onScrollChanged() {
-//                mScrollY = mScrollView.getScrollY();
-//                getActivityCast().onUpButtonFloorChanged(mItemId, ArticleDetailFragment.this);
-//                mPhotoContainerView.setTranslationY((int) (mScrollY - mScrollY / PARALLAX_FACTOR));
-//                updateStatusBar();
-//            }
-//        });
-
-        mPhotoView = (ImageView) mRootView.findViewById(R.id.photo);
+        mPhotoView = mRootView.findViewById(R.id.photo);
         mPhotoContainerView = mRootView.findViewById(R.id.photo_container);
 
         mStatusBarColorDrawable = new ColorDrawable(0);
@@ -174,6 +153,7 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
                     (int) (Color.green(mMutedColor) * 0.9),
                     (int) (Color.blue(mMutedColor) * 0.9));
         }
+
         mStatusBarColorDrawable.setColor(color);
         mDrawInsetsFrameLayout.setInsetBackground(mStatusBarColorDrawable);
     }
@@ -208,11 +188,8 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
             return;
         }
 
-        TextView titleView = (TextView) mRootView.findViewById(R.id.article_title);
-        TextView bylineView = (TextView) mRootView.findViewById(R.id.article_byline);
-        bylineView.setMovementMethod(new LinkMovementMethod());
         TextView bodyView = (TextView) mRootView.findViewById(R.id.article_body);
-
+        mCollapseToolBar = (SubtitleCollapsingToolbarLayout) mRootView.findViewById(R.id.collapsingToolBar);
 
         bodyView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Rosario-Regular.ttf"));
 
@@ -220,26 +197,30 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
             mRootView.setAlpha(0);
             mRootView.setVisibility(View.VISIBLE);
             mRootView.animate().alpha(1);
-            titleView.setText(mCursor.getString(ArticleLoader.Query.TITLE));
+
+            String subtitle = "";
+
             Date publishedDate = parsePublishedDate();
             if (!publishedDate.before(START_OF_EPOCH.getTime())) {
-                bylineView.setText(Html.fromHtml(
+                subtitle = Html.fromHtml(
                         DateUtils.getRelativeTimeSpanString(
                                 publishedDate.getTime(),
                                 System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
                                 DateUtils.FORMAT_ABBREV_ALL).toString()
                                 + " by <font color='#ffffff'>"
                                 + mCursor.getString(ArticleLoader.Query.AUTHOR)
-                                + "</font>"));
-
+                                + "</font>").toString();
             } else {
-                // If date is before 1902, just show the string
-                bylineView.setText(Html.fromHtml(
+
+                subtitle = Html.fromHtml(
                         outputFormat.format(publishedDate) + " by <font color='#ffffff'>"
                         + mCursor.getString(ArticleLoader.Query.AUTHOR)
-                                + "</font>"));
-
+                                + "</font>").toString();
             }
+
+            mCollapseToolBar.setTitle(mCursor.getString(ArticleLoader.Query.TITLE));
+            mCollapseToolBar.setSubtitle(subtitle);
+
             bodyView.setText(Html.fromHtml(mCursor.getString(ArticleLoader.Query.BODY).replaceAll("(\r\n|\n)", "<br />")));
 
             Glide.with(this)
@@ -261,19 +242,18 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
                                 Palette p = builder.generate();
                                 mMutedColor = p.getDarkMutedColor(0xFF333333);
                                 mPhotoView.setImageBitmap(resource);
-                                mRootView.findViewById(R.id.meta_bar)
-                                        .setBackgroundColor(mMutedColor);
+                                mRootView.findViewById(R.id.meta_bar).setBackgroundColor(mMutedColor);
+                                mRootView.findViewById(R.id.mainAppBarLayout).setBackgroundColor(mMutedColor);
                                 updateStatusBar();
                             }
-
                             // resource is your loaded Bitmap
                             return true;
                         }
                     }).submit();
         } else {
             mRootView.setVisibility(View.GONE);
-            titleView.setText("N/A");
-            bylineView.setText("N/A" );
+            mCollapseToolBar.setSubtitle("N/A");
+            mCollapseToolBar.setTitle("N/A");
             bodyView.setText("N/A");
         }
     }

@@ -26,11 +26,9 @@ public class ArticleDetailActivity extends AppCompatActivity implements LoaderMa
 
     private Cursor mCursor;
     private long mStartId;
-
     private long mSelectedItemId;
     private int mSelectedItemUpButtonFloor = Integer.MAX_VALUE;
     private int mTopInset;
-
     private ViewPager mPager;
     private MyPagerAdapter mPagerAdapter;
     private View mUpButtonContainer;
@@ -118,7 +116,7 @@ public class ArticleDetailActivity extends AppCompatActivity implements LoaderMa
         // Select the start ID
         if (mStartId > 0) {
             mCursor.moveToFirst();
-            // TODO: optimize
+
             while (!mCursor.isAfterLast()) {
                 if (mCursor.getLong(ArticleLoader.Query._ID) == mStartId) {
                     final int position = mCursor.getPosition();
@@ -135,13 +133,6 @@ public class ArticleDetailActivity extends AppCompatActivity implements LoaderMa
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
         mCursor = null;
         mPagerAdapter.notifyDataSetChanged();
-    }
-
-    public void onUpButtonFloorChanged(long itemId, ArticleDetailFragment fragment) {
-        if (itemId == mSelectedItemId) {
-            mSelectedItemUpButtonFloor = fragment.getUpButtonFloor();
-            updateUpButtonPosition();
-        }
     }
 
     private void updateUpButtonPosition() {
