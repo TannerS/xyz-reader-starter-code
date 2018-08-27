@@ -1,5 +1,6 @@
 package com.example.xyzreader.ui;
 
+import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.Nullable;
 import android.support.design.widget.SubtitleCollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
@@ -242,7 +243,28 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
                                 Palette p = builder.generate();
                                 mMutedColor = p.getDarkMutedColor(0xFF333333);
                                 mPhotoView.setImageBitmap(resource);
-                                mRootView.findViewById(R.id.meta_bar).setBackgroundColor(mMutedColor);
+//                                mRootView.findViewById(R.id.meta_bar).setBackgroundColor(mMutedColor);
+
+                                //Color.parseColor() method allow us to convert
+                                // a hexadecimal color string to an integer value (int color)
+
+                                // https://stackoverflow.com/questions/5248583/how-to-get-a-color-from-hexadecimal-color-string
+                                // https://stackoverflow.com/questions/13929877/how-to-make-gradient-background-in-android
+                                String string = "#000";
+                                int color = Integer.parseInt(string.replaceFirst("^#",""), 16);
+
+                                int[] colors = {color, mMutedColor};
+                                //create a new gradient color
+                                GradientDrawable gd = new GradientDrawable(
+                                        GradientDrawable.Orientation.TOP_BOTTOM, colors);
+
+                                gd.setCornerRadius(0f);
+                                gd.setGradientType(GradientDrawable.LINEAR_GRADIENT);
+                                gd.setGradientRadius(90f);
+                                //apply the button background to newly created drawable gradient
+                                mRootView.findViewById(R.id.meta_bar).setBackground(gd);
+
+
                                 mRootView.findViewById(R.id.mainAppBarLayout).setBackgroundColor(mMutedColor);
                                 updateStatusBar();
                             }
@@ -257,6 +279,9 @@ public class ArticleDetailFragment extends Fragment implements LoaderManager.Loa
             bodyView.setText("N/A");
         }
     }
+
+
+
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {

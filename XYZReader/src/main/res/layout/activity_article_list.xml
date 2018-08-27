@@ -7,7 +7,7 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:background="@color/theme_primary"
-        android:layout_height="75dp">
+        android:layout_height="100dp">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsingToolBar"
@@ -21,18 +21,19 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
-                android:layout_gravity="center|top"
+                android:layout_gravity="start|top"
                 android:layout_marginLeft="@dimen/list_toolbar_side_margin"
                 android:layout_marginRight="@dimen/list_toolbar_side_margin"
-                android:gravity="center|top"
+                android:gravity="start|top"
                 app:layout_collapseMode="pin"
-                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
                 <ImageView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/app_name"
-                    android:scaleType="fitCenter"
+                    android:scaleType="centerInside"
+                    android:adjustViewBounds="true"
                     android:src="@drawable/logo" />
 
             </android.support.v7.widget.Toolbar>

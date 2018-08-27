@@ -31,8 +31,8 @@
                 app:contentScrim="?attr/colorPrimary"
                 app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
                 app:collapsedTitleTextAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"
-                app:expandedSubtitleTextAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-                app:collapsedSubtitleTextAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"
+                app:expandedSubtitleTextAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
+                app:collapsedSubtitleTextAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle.Inverse"
                 app:subtitle="SUBTITLE"
                 app:title="TITLE">
 
@@ -54,7 +54,7 @@
                         android:id="@+id/meta_bar"
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
-                        android:background="#333"
+                        android:background="@drawable/photo_background_protection"
                         android:layout_gravity="bottom"
                         android:gravity="bottom" />
 
@@ -68,7 +68,7 @@
                     android:layout_marginRight="@dimen/list_toolbar_side_margin"
                     app:contentInsetStart="72dp"
                     app:layout_collapseMode="pin"
-                    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
             </android.support.design.widget.SubtitleCollapsingToolbarLayout>
 
@@ -113,18 +113,20 @@
 
         </ScrollView>
 
-    </android.support.design.widget.CoordinatorLayout>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/share_fab"
+            android:stateListAnimator="@animator/fab_state_list_anim"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="@dimen/fab_margin"
+            android:layout_marginBottom="@dimen/fab_margin"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            app:fabSize="normal"
+            android:src="@drawable/ic_baseline_share_24px"
+            app:elevation="6dp"
+            android:contentDescription="@string/action_share"
+            app:pressedTranslationZ="12dp" />
 
-    <ImageButton android:id="@+id/share_fab"
-        android:stateListAnimator="@animator/fab_state_list_anim"
-        android:background="@drawable/add_fab_background"
-        android:layout_gravity="bottom|end"
-        android:layout_marginRight="@dimen/fab_margin"
-        android:layout_marginBottom="@dimen/fab_margin"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:src="@drawable/ic_baseline_share_24px"
-        android:elevation="@dimen/fab_elevation"
-        android:contentDescription="@string/action_share" />
+    </android.support.design.widget.CoordinatorLayout>
 
 </com.example.xyzreader.ui.DrawInsetsFrameLayout>
