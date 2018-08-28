@@ -12,7 +12,8 @@
     android:clickable="true"
     android:focusable="true"
     android:foreground="?selectableItemBackground"
-    android:elevation="4dp">
+    android:elevation="5dp"
+    app:cardElevation="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,7 +23,7 @@
         <ImageView
             android:id="@+id/thumbnail"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="@dimen/detail_card_image_h"
             android:scaleType="centerCrop"
             android:background="@color/photo_placeholder" />
 

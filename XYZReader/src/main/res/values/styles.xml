@@ -2,42 +2,41 @@
 <resources>
     <style name="Main.Theme" parent="@style/Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <!--<item name="android:statusBarColor">@color/theme_primary_dark</item>-->
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:colorPrimary">@color/theme_primary</item>
         <item name="android:colorPrimaryDark">@color/theme_primary_dark</item>
-
         <item name="android:navigationBarColor">?attr/colorPrimaryDark</item>
         <item name="colorAccent">@color/theme_accent</item>
         <item name="colorPrimaryDark">@color/theme_primary_dark</item>
         <item name="colorPrimary">@color/theme_primary</item>
         <item name="android:statusBarColor">?attr/colorPrimaryDark</item>
-
     </style>
-
 
     <style name="Main.Theme.Detail">
         <item name="android:statusBarColor">@android:color/transparent</item>
-
     </style>
 
     <style name="Fab" parent="android:Widget.Material.Button">
         <item name="android:elevation">6dp</item>
         <item name="android:translationZ">12dp</item>
-
     </style>
 
-    <style name="Title">
+    <style name="Title" parent="@android:style/TextAppearance.Large">
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">@dimen/detail_title_text_size</item>
         <item name="android:textColor">@color/theme_primary_dark</item>
     </style>
 
-    <style name="SubTitle">
+    <style name="SubTitle" parent="@android:style/TextAppearance.Medium">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textSize">@dimen/detail_sub_title_text_size</item>
+        <item name="android:textColor">@color/theme_primary_dark</item>
+    </style>
+
+    <style name="Story" parent="@android:style/TextAppearance.Small">
         <item name="android:fontFamily">sans-serif</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">@dimen/detail_body_text_size</item>
         <item name="android:textColor">@color/theme_primary_dark</item>
     </style>
-
 </resources>
